@@ -24,6 +24,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'main',
     'bootstrap4',
     'django.contrib.humanize',
     'django.contrib.auth',
