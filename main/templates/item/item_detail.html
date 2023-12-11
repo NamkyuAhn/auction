@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<head>
+    <style>
+    .item-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px; /* 이미지와 정보 사이의 간격 조절 */
+    }
+
+    .thumbnail {
+        max-width: 800px; /* 원하는 썸네일 최대 너비 설정 */
+        max-height: 450px; /* 원하는 썸네일 최대 높이 설정 */
+        margin-right: 20px; /* 이미지와 정보 사이의 간격 조절 */
+    }
+
+    .item-info {
+        flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    }
+    </style>
+</head>
+<body>
+    <h1>상품 상세정보</h1>
+    
+    <ul>
+        {% for item in items %}
+            <li>
+                <div class="item-container">
+                    <img src="{{ item.image.url }}" alt="Item Image" class="thumbnail">
+    
+                    <div class="item-info">
+                        <strong>상품 이름:</strong> {{ item.name }}<br>
+                        <strong>시작 가격:</strong> {{ item.start_price }} / 
+                        <strong>현재 입찰 최고가:</strong> {{ item.highest_price }}<br>
+                        <strong>만료 일자:</strong> {{ item.expire_date }}<br>
+    
+                        <form method="POST" action="{% url 'main:item_entry' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            입찰 가격 : <input type="text" onkeyup="javascript:chnNum(this)" name="price" required><br>
+                            <input type="submit" class="btn btn-primary" value="상품 입찰하기">
+                        </form>
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{% load humanize %}
+
+<div class="wrapper">
+        <h1>작품 등록</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            제목 : {{ form.item_name }}<br>
+            시작 가격 : <input type="text" onkeyup="javascript:chnNum(this)" name="price" required><br>
+            만료 일자 : <input type="date" placeholder="연도,월,일" name="expire_date" value="{{date|date:'Y-m-d'}}" required><br>
+            상품 사진 : <input type="file" name="image" accept=".jpg, .png, .jpeg" required><br>
+            <input type="submit" class="btn btn-primary" value="상품 등록하기">
+        </form>
+</div>
+
+{% endblock %}

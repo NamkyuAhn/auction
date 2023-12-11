@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <style>
+        .item-container {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>상품 리스트</h1>
+
+    <ul>
+        {% for item in items %}
+            {% if forloop.counter0|divisibleby:5 %}
+                </ul><ul>
+            {% endif %}
+            <li>
+                <div class="item-container">
+                    <a href="{% url 'main:item_detail' item.id %}">
+                        <img src="{{ item.image.url }}" alt="Item Image" class="thumbnail">
+                    </a>
+                    <div class="item-info">
+                        <a href="{% url 'main:item_detail' item.id %}">
+                            <strong>상품 이름:</strong> {{ item.name }}<br>
+                        </a>
+                        <strong>시작 가격:</strong> {{ item.start_price }} /
+                        <strong>현재 입찰 최고가:</strong> {{ item.highest_price }}<br>
+                        <strong>만료 일자:</strong> {{ item.expire_date }}<br>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+
+{% endblock %}

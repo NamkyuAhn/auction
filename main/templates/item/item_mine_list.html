@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+<body>
+    <h1>내가 생성한 상품 리스트</h1>
+    
+    <ul>
+        {% for item in items %}
+            <li>
+                <div class="item-container">
+                    <a href="{% url 'main:item_detail' item.id %}">
+                    {% for image in item.item_image.all %}
+                        <img src="{{ image.image.url }}" alt="Item Image" class="thumbnail">
+                    {% endfor %}
+                    <div class="item-info">
+                    <a href="{% url 'main:item_detail' item.id %}">
+                    <strong>상품 이름:</strong> {{ item.name }}<br></a>
+                    <strong>시작 가격:</strong> {{ item.start_price }}<br>
+                    <strong>만료 일자:</strong> {{ item.expire_date }}<br>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+{% endblock %}
